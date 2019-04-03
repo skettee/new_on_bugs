@@ -105,36 +105,37 @@ else:
                 moa_image = moa_image['content']
             #print('image: ', moa_image)
         
-        # 데이터베이스에 있는 포스트와 중복되는지를 확인하고 
-        # JSON형식으로 수집한 데이터를 변환한다.
-        if my_db.isNewItem('title', moa_title):
-            # 데이터 타입을 확인한다.
-            assert type(moa_title) == str, 'title: type error'
-            assert type(moa_url) == str, 'url: type error'
-            assert type(moa_image) == str, 'image: type error'
-            assert type(moa_site_name) == str, 'siteName: type error'
-            assert type(moa_createdBy) == str, 'createBy: type error'
-            assert type(moa_createdAt) == datetime, 'createdAt: type error'
-            assert type(moa_timeStamp) == datetime, 'timeStamp: type error'
+            # 데이터베이스에 있는 포스트와 중복되는지를 확인하고 
+            # JSON형식으로 수집한 데이터를 변환한다.
+            if my_db.isNewItem('title', moa_title):
+                # 데이터 타입을 확인한다.
+                assert type(moa_title) == str, 'title: type error'
+                assert type(moa_url) == str, 'url: type error'
+                assert type(moa_image) == str, 'image: type error'
+                assert type(moa_site_name) == str, 'siteName: type error'
+                assert type(moa_createdBy) == str, 'createBy: type error'
+                assert type(moa_createdAt) == datetime, 'createdAt: type error'
+                assert type(moa_timeStamp) == datetime, 'timeStamp: type error'
 
-            db_data = { 'title': moa_title, 
-                'url': moa_url,
-                'image': moa_image,
-                'siteName': moa_site_name,
-                'createdBy': moa_createdBy,
-                'createdAt': moa_createdAt,
-                'timeStamp': moa_timeStamp
-            }
+                db_data = { 'title': moa_title, 
+                    'url': moa_url,
+                    'image': moa_image,
+                    'siteName': moa_site_name,
+                    'createdBy': moa_createdBy,
+                    'createdAt': moa_createdAt,
+                    'timeStamp': moa_timeStamp
+                }
 
-            # 디버그를 위해서 수집한 데이터를 출력한다.
-            temp_data = db_data.copy()
-            print(json.dumps(temp_data, indent=4, ensure_ascii=False, default=str))
-            
-            # 수집한 데이터를 데이터베이스에 전송한다.
-            my_db.insertTable(db_data)
+                # 디버그를 위해서 수집한 데이터를 출력한다.
+                temp_data = db_data.copy()
+                print(json.dumps(temp_data, indent=4, ensure_ascii=False, default=str))
+                
+                # 수집한 데이터를 데이터베이스에 전송한다.
+                my_db.insertTable(db_data)
 
-            # one time break
-            break
+                # one time break
+                break
+                
     # 데이터 베이스를 닫는다.
     my_db.close()
 
