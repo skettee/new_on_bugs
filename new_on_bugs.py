@@ -78,7 +78,7 @@ else:
         # "2019.03.21"
         moa_createdAt = datetime.strptime(moa_createdAt, '%Y.%m.%d') 
         # UTC 값으로 변경하기 위해서 9시간을 뺀다. 
-        #moa_createdAt = moa_createdAt - timedelta(hours=9)
+        moa_createdAt = moa_createdAt - timedelta(hours=9)
         #print('moa_createdAt', moa_createdAt)
         
         # 현재 날짜와 시간을 수집한다.
