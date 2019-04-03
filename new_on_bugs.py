@@ -61,9 +61,9 @@ else:
 
     # 반복해서 리스트의 목록을 하나씩 검색하고 데이터를 수집한다.
     for post in albumList.find_all('figure', albumid=True):
-        moa_image = post.find('img', src=True)
-        if moa_image:
-            moa_image = moa_image['src']
+        #moa_image = post.find('img', src=True)
+        #if moa_image:
+        #    moa_image = moa_image['src']
         #print('image: ', moa_image)
 
         moa_title = post.find('a', class_='albumTitle')['title']
@@ -83,6 +83,27 @@ else:
         
         # 현재 날짜와 시간을 수집한다.
         moa_timeStamp = datetime.now()
+
+        # 포스트의 주소로 이동한다.
+        try:
+            response =  requests.get(moa_url)
+            response.raise_for_status()
+        except HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')
+        except Exception as err:
+                print(f'Other error occurred: {err}')
+        else:
+            subhtml_source = response.text
+            #with open(f'{site_name}_section_request.html', 'w') as f:
+            #    f.write(subhtml_source)
+            #break
+            subsoap = BeautifulSoup(subhtml_source, 'html.parser')
+            
+            # 포스트의 대표 이미지(앨범 표지)의 주소를 수집한다.
+            moa_image = subsoap.find('meta', property="og:image")
+            if moa_image:
+                moa_image = moa_image['content']
+            #print('image: ', moa_image)
         
         # 데이터베이스에 있는 포스트와 중복되는지를 확인하고 
         # JSON형식으로 수집한 데이터를 변환한다.
