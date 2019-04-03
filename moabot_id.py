@@ -1,1 +1,1 @@
-bot_id = 'aww_on_reddit'
+bot_id = 'new_on_bugs'
